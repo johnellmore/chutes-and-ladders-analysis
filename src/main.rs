@@ -13,7 +13,11 @@ fn main() {
     };
 
     let mut game = GameInstance::create(&config);
-    let run = game.simulate_player();
 
-    println!("{:?}", run);
+    // simulate 1,000 games
+    for _ in 1..1000000 {
+        game.simulate_player();
+    }
+
+    // println!("{:?}", run);
 }

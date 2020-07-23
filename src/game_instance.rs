@@ -22,18 +22,18 @@ impl fmt::Debug for GameConfig {
 pub struct GameInstance<'a> {
     config: &'a GameConfig,
     rng: ThreadRng,
-    turns: u16,
-    spaces_traversed: u16,
-    ladders_taken: u16,
-    chutes_taken: u16,
+    turns: u32,
+    spaces_traversed: u32,
+    ladders_taken: u32,
+    chutes_taken: u32,
 }
 
 #[derive(Debug)]
 pub struct PlayerRun {
-    turns: u16,
-    spaces_traversed: u16,
-    ladders_taken: u16,
-    chutes_taken: u16,
+    turns: u32,
+    spaces_traversed: u32,
+    ladders_taken: u32,
+    chutes_taken: u32,
 }
 
 impl<'a> GameInstance<'a> {
@@ -76,7 +76,7 @@ impl<'a> GameInstance<'a> {
             return current_pos;
         }
 
-        self.spaces_traversed += dice_roll as u16;
+        self.spaces_traversed += dice_roll as u32;
 
         // if the player got to space 100, they've won
         if new_pos == 100 {
@@ -96,8 +96,6 @@ impl<'a> GameInstance<'a> {
             },
             TransportType::None => {}
         };
-
-        println!("{}", new_pos);
 
         new_pos
     }
