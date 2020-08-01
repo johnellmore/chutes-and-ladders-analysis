@@ -1,10 +1,11 @@
 mod board;
 mod game_instance;
 
+use std::error::Error;
 use game_instance::GameConfig;
 use game_instance::GameInstance;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let warps = board::get_board_warps();
 
     let config = GameConfig {
@@ -14,10 +15,13 @@ fn main() {
 
     let mut game = GameInstance::create(&config);
 
-    // simulate 1,000 games
-    for _ in 1..1000000 {
-        game.simulate_player();
+    // simulate a bunch of games and record their results
+    let mut writer = csv::Writer::from_path("./runs.csv").unwrap();
+    for _ in 1..100 {
+        writer.serialize(game.simulate_player())?;
     }
+    writer.flush()?;
 
-    // println!("{:?}", run);
+    println!("Complete.");
+    Ok(())
 }

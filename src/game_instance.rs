@@ -1,6 +1,7 @@
 use rand::rngs::ThreadRng;
 use rand::Rng;
 use std::fmt;
+use serde::Serialize;
 use crate::board::TransportType;
 use crate::board::BoardWarps;
 
@@ -28,12 +29,12 @@ pub struct GameInstance<'a> {
     chutes_taken: u32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct PlayerRun {
-    turns: u32,
-    spaces_traversed: u32,
-    ladders_taken: u32,
-    chutes_taken: u32,
+    pub turns: u32,
+    pub spaces_traversed: u32,
+    pub ladders_taken: u32,
+    pub chutes_taken: u32,
 }
 
 impl<'a> GameInstance<'a> {
@@ -49,6 +50,11 @@ impl<'a> GameInstance<'a> {
     }
 
     pub fn simulate_player(&mut self) -> PlayerRun {
+        self.turns = 0;
+        self.spaces_traversed = 0;
+        self.ladders_taken = 0;
+        self.chutes_taken = 0;
+
         let mut pos = 0;
         while pos != 100 {
             self.turns += 1;
