@@ -17,7 +17,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // simulate a bunch of games and record their results
     let mut writer = csv::Writer::from_path("./runs.csv").unwrap();
-    for _ in 1..100 {
+    for _ in 0..1000000 {
         writer.serialize(game.simulate_player())?;
     }
     writer.flush()?;
